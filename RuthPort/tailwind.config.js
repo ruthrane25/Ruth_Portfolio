@@ -21,6 +21,8 @@ export default {
           'emerald-glow': '#34d399',
           indigo: '#6366f1',
           'indigo-glow': '#818cf8',
+          violet: '#8b5cf6',
+          'violet-glow': '#a78bfa',
           slate: {
             750: '#1e293b',
             850: '#0f172a',

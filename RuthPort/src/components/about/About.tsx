@@ -1,148 +1,83 @@
 import React from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { TiltCard } from '../common/TiltCard';
-import { MapPin, Terminal, Layers, Code, Radio, CheckCircle2 } from 'lucide-react';
+import { HybridTerminal } from './HybridTerminal';
+import { MapPin, Terminal, Layers, Code, Radio, CheckCircle2, Cpu, Globe } from 'lucide-react';
+import { PERSONAL_INFO } from '../../data/portfolioData';
 
 export const About: React.FC = () => {
-  const engineeringPillars = [
-    {
-      icon: Terminal,
-      title: 'PyQt / PySide6 Desktop GUI Systems',
-      description: 'Specializing in robust, multi-threaded desktop control suites (QThreads, GraphicsScene) that operate without crashing in harsh industrial factory environments.',
-      accent: 'cyan' as const,
-    },
-    {
-      icon: Radio,
-      title: 'Physical Layer Hardware Integration',
-      description: 'Architecting rock-solid serial (RS-232, UART) and USB communication protocols for multi-axis servo/stepper stages, laser triggers, and sensor telemetry loops.',
-      accent: 'emerald' as const,
-    },
-    {
-      icon: Layers,
-      title: 'DXF & G-Code Geometric Parsers',
-      description: 'Developing high-performance vector interpolation engines that convert complex CAD geometries into sub-micron precision motion trajectories with jerk-limited acceleration.',
-      accent: 'indigo' as const,
-    },
-    {
-      icon: Code,
-      title: 'Full-Stack Web & Automation Architecture',
-      description: 'Engineering responsive, lightning-fast web operations platforms using SvelteKit, React, Node.js, and MongoDB that eradicate manual spreadsheet bottlenecks.',
-      accent: 'cyan' as const,
-    },
-  ];
-
   return (
     <section id="about" className="relative py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <SectionHeader
-          badge="01 // ABOUT ME"
-          title="Bridging Hardware Control with"
-          highlightedText="Modern Software Engineering"
-          description="Based in Mumbai, India, I specialize in the intersection of real-time industrial machine control, spatial vector algorithms, and high-performance full-stack architectures."
+          badge="01 // THE HYBRID EDGE"
+          title="Bridging Full-Stack Web with"
+          highlightedText="Industrial Control Software"
+          description="Most engineers build either pure web platforms or isolated firmware. I build at the exact convergence point: real-time desktop control suites, micron-precision vector math, and modern reactive cloud applications."
           badgeColor="cyan"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Split Layout: Narrative & Interactive Live Terminal */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left Column: Personal Narrative & Philosophy */}
-          <div className="lg:col-span-7 space-y-6">
+          {/* Left Column: Professional Summary & Philosophy */}
+          <div className="lg:col-span-6 space-y-6">
             <TiltCard glowColor="cyan" className="p-6 sm:p-8">
-              <div className="flex items-center gap-2 mb-4 text-xs font-mono text-cyan-400">
-                <Terminal className="w-4 h-4" />
-                <span>ruthvij_bio.md • Core Philosophy</span>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2 text-xs font-mono text-cyan-400">
+                  <Terminal className="w-4 h-4" />
+                  <span>ruthvij_bio.ts // Architectural Focus</span>
+                </div>
+
+                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[11px] font-mono text-emerald-300">
+                  <MapPin className="w-3 h-3 text-emerald-400" />
+                  {PERSONAL_INFO.location}
+                </div>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
-                Engineering software that commands the physical world with sub-micron precision.
+              <h3 className="text-2xl font-black text-white tracking-tight leading-snug">
+                Turning complex physical machine kinematics into elegant, rock-solid software.
               </h3>
 
-              <div className="space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+              <div className="space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal mt-4">
                 <p>
-                  I am a <strong className="text-white font-semibold">Software Design Engineer</strong> at <span className="text-cyan-400 font-semibold">Specialize Products Pvt. Ltd.</span>, where I architect full-fledged desktop control applications and graphical user interfaces for high-tech industrial machines — including Photovoltaic Laser Scribers, Semiconductor Wafer Processors, and 3D/4D Bio-Printers.
+                  As a <strong className="text-white font-semibold">Software Design Engineer</strong> at <span className="text-cyan-400 font-semibold">Specialize Products Pvt. Ltd.</span>, I architect and build complete desktop control applications, hardware communication layers, and rich graphical user interfaces for high-precision industrial systems — including Photovoltaic Laser Scribers, Semiconductor Wafer Processors, and 3D/4D Bio-Printers.
                 </p>
                 <p>
-                  My engineering background combines an Electronics Engineering foundation with extensive software expertise in <strong className="text-white font-semibold">Python (PySide6, PyQt)</strong>, real-time <strong className="text-white font-semibold">serial/USB communication</strong> pipelines, and custom <strong className="text-white font-semibold">G-code & DXF vector parsers</strong>. Whether parsing spatial coordinate matrices with Pandas/NumPy or writing synchronized motion dispatchers, I focus on deterministic reliability and sub-micron fidelity.
+                  My engineering foundation is built on <strong className="text-white font-semibold">Python (PySide6 / PyQt)</strong>, multithreaded control architectures, deterministic <strong className="text-white font-semibold">serial (RS-232 / UART) & USB pipelines</strong>, and algorithmic <strong className="text-white font-semibold">G-code & DXF vector parsing</strong>.
                 </p>
                 <p>
-                  Beyond desktop machine control, I am an accomplished full-stack developer experienced in building reactive web platforms with <strong className="text-white font-semibold">SvelteKit, React, TypeScript, Node.js, and MongoDB</strong>. At VC Technosolutions, I directed an engineering team that transitioned manual enterprise tracking into an automated platform, boosting operational throughput by 25%.
+                  On the modern web front, I bring proven experience leading full-stack platforms with <strong className="text-white font-semibold">SvelteKit, React, TypeScript, Node.js, and MongoDB</strong>. At VC Technosolutions, I directed an engineering team that automated legacy manual tracking, delivering an authenticated, reactive operational platform that boosted daily throughput by <strong className="text-emerald-400 font-semibold">25%</strong>.
                 </p>
               </div>
 
-              {/* Core Attributes checklist */}
-              <div className="mt-8 pt-6 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
-                {[
-                  'Sub-micron toolpath precision',
-                  'Multithreaded QThread architecture',
-                  'DXF/G-code vector acceleration',
-                  'Real-time radiometric IR processing',
-                  'Modular Windows/Linux installers',
-                  'High-throughput web architectures',
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-slate-300">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
+              {/* Core Pillars Grid */}
+              <div className="mt-8 pt-6 border-t border-white/[0.08] grid grid-cols-2 gap-3 text-xs font-mono">
+                <div className="p-2.5 rounded-xl bg-slate-950/60 border border-cyan-500/20">
+                  <span className="text-cyan-400 font-bold block">Desktop GUI</span>
+                  <span className="text-slate-400 text-[11px]">PySide6, PyQt, QThreads</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-950/60 border border-emerald-500/20">
+                  <span className="text-emerald-400 font-bold block">Physical Hardware</span>
+                  <span className="text-slate-400 text-[11px]">RS-232, USB, Galvo, Motion</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-950/60 border border-violet-500/20">
+                  <span className="text-violet-400 font-bold block">Vector Math</span>
+                  <span className="text-slate-400 text-[11px]">DXF, G-Code, NumPy, &lt; 1µm</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-950/60 border border-white/10">
+                  <span className="text-slate-200 font-bold block">Modern Web</span>
+                  <span className="text-slate-400 text-[11px]">SvelteKit, React, MongoDB</span>
+                </div>
               </div>
             </TiltCard>
           </div>
 
-          {/* Right Column: Location & Core Capabilities Cards */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Location Card */}
-            <TiltCard glowColor="emerald" className="p-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="text-xs font-mono uppercase text-emerald-400 font-semibold">Location & Coordinates</span>
-                  <h4 className="text-xl font-bold text-white mt-1 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-emerald-400" />
-                    Parel, Mumbai, India
-                  </h4>
-                  <p className="text-xs font-mono text-slate-400 mt-1">
-                    18.9950° N, 72.8397° E • IST (UTC+5:30)
-                  </p>
-                </div>
-                <div className="px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[11px] font-mono text-emerald-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                  Available
-                </div>
-              </div>
-
-              <div className="mt-4 pt-4 border-t border-white/[0.08] text-xs text-slate-400 leading-relaxed">
-                Operating from Mumbai's commercial and tech heartland. Available for high-impact software design roles, industrial automation projects, and consulting engagements worldwide.
-              </div>
-            </TiltCard>
-
-            {/* Quick Stat Pill Cards */}
-            <div className="grid grid-cols-1 gap-4">
-              {engineeringPillars.map((pillar, idx) => {
-                const Icon = pillar.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="p-4 rounded-xl bg-slate-900/60 border border-white/[0.06] hover:border-cyan-500/30 transition-colors"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                        <Icon className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-bold text-white">
-                          {pillar.title}
-                        </h5>
-                        <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                          {pillar.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
+          {/* Right Column: Interactive Live Terminal Simulator */}
+          <div className="lg:col-span-6">
+            <HybridTerminal />
           </div>
 
         </div>

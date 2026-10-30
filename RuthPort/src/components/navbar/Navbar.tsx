@@ -4,17 +4,28 @@ import { Menu, X, FileText, Github, Linkedin } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { ResumeModal } from './ResumeModal';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  resumeOpen?: boolean;
+  setResumeOpen?: (open: boolean) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({
+  resumeOpen: externalResumeOpen,
+  setResumeOpen: externalSetResumeOpen,
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [resumeOpen, setResumeOpen] = useState(false);
+  const [internalResumeOpen, setInternalResumeOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+
+  const resumeOpen = externalResumeOpen !== undefined ? externalResumeOpen : internalResumeOpen;
+  const setResumeOpen = externalSetResumeOpen !== undefined ? externalSetResumeOpen : setInternalResumeOpen;
 
   const navLinks = [
     { name: 'About', href: '#about' },
     { name: 'Experience', href: '#experience' },
+    { name: 'Engineering Lab', href: '#showroom' },
     { name: 'Industrial Systems', href: '#industrial' },
-    { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -23,8 +34,7 @@ export const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Simple active section detection
-      const sections = ['contact', 'skills', 'projects', 'industrial', 'experience', 'about', 'hero'];
+      const sections = ['contact', 'skills', 'industrial', 'showroom', 'experience', 'about', 'hero'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -46,7 +56,7 @@ export const Navbar: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'py-3 bg-[#030712]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
+            ? 'py-3 bg-[#020617]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_4px_30px_rgba(0,0,0,0.6)]'
             : 'py-5 bg-transparent'
         }`}
       >
@@ -85,7 +95,7 @@ export const Navbar: React.FC = () => {
                     href={link.href}
                     className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
                       isActive
-                        ? 'text-cyan-300 bg-cyan-500/10 shadow-[0_0_12px_rgba(6,182,212,0.2)]'
+                        ? 'text-cyan-300 bg-cyan-500/15 shadow-[0_0_12px_rgba(6,182,212,0.25)] border border-cyan-500/30'
                         : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
                     }`}
                   >
@@ -97,7 +107,6 @@ export const Navbar: React.FC = () => {
 
             {/* Action Buttons */}
             <div className="hidden sm:flex items-center gap-2.5">
-              {/* GitHub Link */}
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
@@ -108,18 +117,16 @@ export const Navbar: React.FC = () => {
                 <Github className="w-4 h-4" />
               </a>
 
-              {/* LinkedIn Link */}
               <a
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 rounded-xl bg-slate-900/80 border border-white/[0.08] text-slate-300 hover:text-white hover:border-indigo-500/40 hover:shadow-[0_0_15px_rgba(99,102,241,0.25)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                className="p-2.5 rounded-xl bg-slate-900/80 border border-white/[0.08] text-slate-300 hover:text-white hover:border-violet-500/40 hover:shadow-[0_0_15px_rgba(139,92,246,0.25)] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
                 aria-label="Ruthvij Rane LinkedIn"
               >
                 <Linkedin className="w-4 h-4" />
               </a>
 
-              {/* Resume Trigger Button */}
               <button
                 onClick={() => setResumeOpen(true)}
                 className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-950 bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-300 hover:opacity-95 shadow-[0_0_20px_rgba(6,182,212,0.35)] transition-all duration-200 group overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-400"
@@ -129,7 +136,7 @@ export const Navbar: React.FC = () => {
               </button>
             </div>
 
-            {/* Mobile Menu Hamburger */}
+            {/* Mobile Hamburger */}
             <div className="flex sm:hidden items-center gap-2">
               <button
                 onClick={() => setResumeOpen(true)}
@@ -148,7 +155,7 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
