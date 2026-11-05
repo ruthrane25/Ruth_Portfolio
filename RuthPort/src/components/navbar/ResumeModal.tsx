@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from '../common/Modal';
-import { Printer, MapPin, Mail, Github, Linkedin, Download, Copy, Check, ExternalLink, Sparkles, FileText, CheckCircle2 } from 'lucide-react';
+import { MapPin, Mail, Github, Linkedin, Download, Copy, Check, ExternalLink, Sparkles, FileText, CheckCircle2 } from 'lucide-react';
 import { PERSONAL_INFO, WORK_EXPERIENCES, INDUSTRIAL_SYSTEMS, EDUCATION_DATA, CERTIFICATIONS_DATA, SKILL_CATEGORIES } from '../../data/portfolioData';
 import confetti from 'canvas-confetti';
 
@@ -12,10 +12,6 @@ interface ResumeModalProps {
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
   const [resumeTheme, setResumeTheme] = useState<'dark' | 'light'>('dark');
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -72,22 +68,12 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               </button>
             </div>
 
-            {/* Print / Save to PDF */}
-            <button
-              onClick={handlePrint}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 transition-colors shadow-sm"
-              title="Print or Save as PDF"
-            >
-              <Printer className="w-4 h-4 text-cyan-400" />
-              <span>Print / Save PDF</span>
-            </button>
-
             {/* Download Soft Copy Resume PDF */}
             <a
-              href="/resume.pdf"
-              download="Ruthvij_Rane_Resume.pdf"
+              href="/Ruthvij_Rane_Resume_SDA.pdf"
+              download="Ruthvij_Rane_Resume_SDA.pdf"
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 transition-colors shadow-sm"
-              title="Download exact soft copy resume PDF"
+              title="Download Ruthvij_Rane_Resume_SDA.pdf"
             >
               <Download className="w-4 h-4 text-emerald-400" />
               <span>Download PDF</span>
@@ -112,13 +98,18 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               )}
             </button>
 
-            {/* Direct Email Action */}
+            {/* Direct Gmail Compose Action */}
             <a
-              href={`mailto:${PERSONAL_INFO.email}?subject=Software Design Engineer Opportunity / Ruthvij Rane`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                PERSONAL_INFO.email
+              )}&su=${encodeURIComponent('Software Design Engineer Opportunity / Ruthvij Rane')}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-bold hover:opacity-90 transition-opacity shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+              title="Open Gmail Compose directly with ruthvijrane2001@gmail.com"
             >
-              <Mail className="w-4 h-4" />
-              <span>Contact</span>
+              <Mail className="w-4 h-4 text-slate-950" />
+              <span>Contact via Gmail</span>
             </a>
           </div>
         </div>

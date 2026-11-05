@@ -66,9 +66,12 @@ export const Footer: React.FC = () => {
             </a>
 
             <a
-              href={`mailto:${PERSONAL_INFO.email}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(PERSONAL_INFO.email)}`}
+              target="_blank"
+              rel="noopener noreferrer"
               className="p-2.5 rounded-xl bg-slate-900/80 border border-white/[0.08] text-slate-400 hover:text-white hover:border-emerald-500/40 hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] transition-all"
-              aria-label="Email"
+              aria-label="Email via Gmail"
+              title="Compose email to Ruthvij via Gmail"
             >
               <Mail className="w-4 h-4" />
             </a>

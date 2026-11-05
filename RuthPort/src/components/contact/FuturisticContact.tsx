@@ -33,11 +33,15 @@ export const FuturisticContact: React.FC = () => {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [lastDispatchedUrls, setLastDispatchedUrls] = useState<{
+    gmail: string;
+    mailto: string;
+  } | null>(null);
   const [toast, setToast] = useState<ToastState | null>(null);
 
   // Auto-dismiss toast after 6 seconds
   useEffect(() => {
-    if (toast && toast.type !== 'info') {
+    if (toast) {
       const timer = setTimeout(() => {
         setToast(null);
       }, 6000);
@@ -57,7 +61,7 @@ export const FuturisticContact: React.FC = () => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
@@ -69,62 +73,47 @@ export const FuturisticContact: React.FC = () => {
       return;
     }
 
-    setIsSubmitting(true);
-    setToast({
-      type: 'info',
-      title: 'Transmitting Packet...',
-      message: 'Dispatching encrypted transmission directly to ruthvijrane2001@gmail.com',
+    const to = PERSONAL_INFO.email; // ruthvijrane2001@gmail.com
+    const su = formState.subject.trim()
+      ? `[Portfolio Inquiry] ${formState.subject.trim()}`
+      : `Portfolio Inquiry from ${formState.name.trim()}`;
+
+    const bodyContent = `${formState.message.trim()}\n\n---\nSender Name: ${formState.name.trim()}\nSender Email: ${formState.email.trim()}\nRecipient: ${to}`;
+
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+      to
+    )}&su=${encodeURIComponent(su)}&body=${encodeURIComponent(bodyContent)}`;
+
+    const mailtoUrl = `mailto:${to}?subject=${encodeURIComponent(su)}&body=${encodeURIComponent(
+      bodyContent
+    )}`;
+
+    setLastDispatchedUrls({ gmail: gmailUrl, mailto: mailtoUrl });
+
+    // Confetti celebration
+    confetti({
+      particleCount: 90,
+      spread: 85,
+      origin: { y: 0.65 },
+      colors: ['#06b6d4', '#10b981', '#8b5cf6'],
     });
 
+    // Attempt to open Gmail compose in a new tab immediately
     try {
-      const response = await fetch('https://formsubmit.co/ajax/ruthvijrane2001@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formState.name,
-          email: formState.email,
-          _subject: formState.subject
-            ? `[Portfolio Inquiry] ${formState.subject}`
-            : `[Portfolio Inquiry] Transmission from ${formState.name}`,
-          message: formState.message,
-          _replyto: formState.email,
-          _captcha: 'false',
-          _template: 'table',
-        }),
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (response.ok || data.success === 'true' || data.success === true) {
-        setIsSubmitting(false);
-        setSubmitted(true);
-        setToast({
-          type: 'success',
-          title: 'Transmission Confirmed',
-          message: 'Your message has been received by ruthvijrane2001@gmail.com. Ruthvij will reply shortly.',
-        });
-        confetti({
-          particleCount: 90,
-          spread: 85,
-          origin: { y: 0.7 },
-          colors: ['#06b6d4', '#10b981', '#8b5cf6'],
-        });
-        setFormState({ name: '', email: '', subject: '', message: '' });
-      } else {
-        throw new Error(data.message || 'Transmission endpoint declined');
+      const win = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+      if (!win) {
+        window.location.href = gmailUrl;
       }
-    } catch (err: any) {
-      console.warn('Form routing fallback:', err);
-      setIsSubmitting(false);
-      setToast({
-        type: 'error',
-        title: 'Connection Resistance Encountered',
-        message: 'Browser security or ad-blockers prevented direct HTTP dispatch. Use direct mail link below.',
-      });
+    } catch {
+      window.location.href = gmailUrl;
     }
+
+    setSubmitted(true);
+    setToast({
+      type: 'success',
+      title: 'Gmail Compose Launched',
+      message: `Opened Gmail with ${to} attached. You can review and click Send!`,
+    });
   };
 
   return (
@@ -158,37 +147,53 @@ export const FuturisticContact: React.FC = () => {
                 Open to software design engineering roles, industrial automation systems, and high-impact full-stack development initiatives.
               </p>
 
-              {/* Email Copy Card with Particle Burst */}
-              <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-cyan-500/30 flex items-center justify-between gap-3 shadow-lg">
+              {/* Email Direct Action Card */}
+              <div className="mt-6 p-4 rounded-xl bg-slate-950/80 border border-cyan-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
                 <div className="flex items-center gap-3 overflow-hidden">
                   <div className="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex-shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div className="overflow-hidden">
-                    <div className="text-[10px] font-mono uppercase text-slate-400">Primary Transmission Inode</div>
+                    <div className="text-[10px] font-mono uppercase text-slate-400">Direct Inode</div>
                     <div className="text-xs sm:text-sm font-mono font-bold text-white truncate">
                       {PERSONAL_INFO.email}
                     </div>
                   </div>
                 </div>
 
-                <button
-                  onClick={handleCopyEmail}
-                  className="px-3.5 py-2 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all flex-shrink-0 active:scale-95 shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-                  title="Copy email to clipboard"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-4 h-4 text-emerald-400" />
-                      <span className="text-emerald-400">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4" />
-                      <span>Copy</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <a
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                      PERSONAL_INFO.email
+                    )}&su=${encodeURIComponent('Software Design Engineer Opportunity / Ruthvij Rane')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 hover:from-cyan-500/30 hover:to-emerald-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-[0_0_12px_rgba(6,182,212,0.2)]"
+                    title="Open Gmail compose with ruthvijrane2001@gmail.com attached"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-cyan-400" />
+                    <span>Gmail</span>
+                    <ExternalLink className="w-3 h-3 text-cyan-400" />
+                  </a>
+
+                  <button
+                    onClick={handleCopyEmail}
+                    className="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-white/10 text-slate-300 text-xs font-mono font-semibold flex items-center gap-1.5 transition-all active:scale-95"
+                    title="Copy email to clipboard"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-400">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* Direct Links */}
@@ -251,21 +256,49 @@ export const FuturisticContact: React.FC = () => {
               </div>
 
               {submitted ? (
-                <div className="p-8 text-center rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6" />
+                <div className="p-8 text-center rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-4">
+                  <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h4 className="text-lg font-bold text-white">Transmission Delivered!</h4>
+                  <h4 className="text-xl font-bold text-white tracking-tight">Gmail Compose Launched!</h4>
                   <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                    Your transmission has been securely routed directly to{' '}
-                    <strong className="text-cyan-300 font-mono">ruthvijrane2001@gmail.com</strong>. Ruthvij will get back to you promptly.
+                    A Gmail compose window was opened with <strong className="text-cyan-300 font-mono">ruthvijrane2001@gmail.com</strong> already attached as recipient.
                   </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="mt-4 px-4 py-2 rounded-xl text-xs font-mono bg-slate-900 border border-emerald-500/40 text-emerald-300 hover:bg-slate-800 transition-colors"
-                  >
-                    Send Another Transmission
-                  </button>
+                  <p className="text-xs text-slate-400">
+                    If your browser blocked the new tab, click below to open your Gmail compose directly:
+                  </p>
+
+                  <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <a
+                      href={lastDispatchedUrls?.gmail || `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(PERSONAL_INFO.email)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-cyan-400 via-emerald-400 to-cyan-300 text-slate-950 hover:opacity-95 shadow-[0_0_20px_rgba(6,182,212,0.35)] transition-all"
+                    >
+                      <Mail className="w-4 h-4 text-slate-950" />
+                      <span>Open in Gmail</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+
+                    <a
+                      href={lastDispatchedUrls?.mailto || `mailto:${PERSONAL_INFO.email}`}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium bg-slate-900 border border-white/10 hover:border-cyan-500/40 text-slate-200 transition-colors"
+                    >
+                      <span>Default Mail App</span>
+                    </a>
+                  </div>
+
+                  <div className="pt-3 border-t border-white/[0.08]">
+                    <button
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormState({ name: '', email: '', subject: '', message: '' });
+                      }}
+                      className="text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors underline"
+                    >
+                      ← Draft another transmission
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -373,20 +406,11 @@ export const FuturisticContact: React.FC = () => {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="w-full mt-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 text-slate-950 font-bold text-sm shadow-[0_0_25px_rgba(6,182,212,0.35)] hover:opacity-95 transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
+                    className="w-full mt-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 text-slate-950 font-bold text-sm shadow-[0_0_25px_rgba(6,182,212,0.35)] hover:opacity-95 transition-all flex items-center justify-center gap-2 group cursor-pointer"
                   >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
-                        Transmitting to ruthvijrane2001@gmail.com...
-                      </span>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                        <span>Send Transmission</span>
-                      </>
-                    )}
+                    <Mail className="w-4 h-4 transition-transform group-hover:scale-110" />
+                    <span>Send via Gmail</span>
+                    <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </button>
                 </form>
               )}
@@ -397,19 +421,19 @@ export const FuturisticContact: React.FC = () => {
 
       </div>
 
-      {/* Real-time Floating Toast Notification */}
+      {/* Real-time Floating Toast Notification - Positioned at Top Right for High Visibility */}
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className={`fixed bottom-6 right-6 z-50 max-w-md w-[calc(100vw-3rem)] p-4 rounded-2xl backdrop-blur-2xl border shadow-2xl flex items-start gap-3 ${
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className={`fixed top-24 right-4 sm:right-8 z-[9999] max-w-md w-[calc(100vw-2rem)] p-4 rounded-2xl backdrop-blur-2xl border shadow-2xl flex items-start gap-3 ${
               toast.type === 'success'
-                ? 'bg-emerald-950/95 border-emerald-500/50 text-emerald-100 shadow-[0_0_30px_rgba(16,185,129,0.35)]'
+                ? 'bg-slate-900/95 border-emerald-500/50 text-emerald-100 shadow-[0_0_35px_rgba(16,185,129,0.35)]'
                 : toast.type === 'error'
-                ? 'bg-rose-950/95 border-rose-500/50 text-rose-100 shadow-[0_0_30px_rgba(244,63,94,0.35)]'
-                : 'bg-slate-900/95 border-cyan-500/50 text-cyan-100 shadow-[0_0_30px_rgba(6,182,212,0.35)]'
+                ? 'bg-slate-900/95 border-rose-500/50 text-rose-100 shadow-[0_0_35px_rgba(244,63,94,0.35)]'
+                : 'bg-slate-900/95 border-cyan-500/50 text-cyan-100 shadow-[0_0_35px_rgba(6,182,212,0.35)]'
             }`}
           >
             <div className="mt-0.5 flex-shrink-0">
@@ -418,7 +442,7 @@ export const FuturisticContact: React.FC = () => {
               ) : toast.type === 'error' ? (
                 <AlertCircle className="w-5 h-5 text-rose-400" />
               ) : (
-                <Loader2 className="w-5 h-5 text-cyan-400 animate-spin" />
+                <Mail className="w-5 h-5 text-cyan-400" />
               )}
             </div>
 
@@ -429,22 +453,6 @@ export const FuturisticContact: React.FC = () => {
               <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                 {toast.message}
               </p>
-
-              {toast.type === 'error' && (
-                <div className="mt-2.5 flex flex-wrap items-center gap-2">
-                  <a
-                    href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
-                      formState.subject || 'Engineering Opportunity / Inquiry'
-                    )}&body=${encodeURIComponent(
-                      `Hi Ruthvij,\n\nName: ${formState.name}\nEmail: ${formState.email}\n\nMessage:\n${formState.message}`
-                    )}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-mono font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 transition-colors"
-                  >
-                    <Mail className="w-3.5 h-3.5" />
-                    <span>Open Mail Client</span>
-                  </a>
-                </div>
-              )}
             </div>
 
             <button
