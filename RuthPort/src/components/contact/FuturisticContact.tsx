@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { SectionHeader } from '../common/SectionHeader';
 import { TiltCard } from '../common/TiltCard';
 import { PERSONAL_INFO } from '../../data/portfolioData';
-import { Mail, Copy, Check, Send, Github, Linkedin, MapPin, Terminal, Sparkles, CheckCircle2 } from 'lucide-react';
+import {
+  Mail,
+  Copy,
+  Check,
+  Send,
+  Github,
+  Linkedin,
+  MapPin,
+  Terminal,
+  Sparkles,
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  X,
+  ExternalLink
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
+
+interface ToastState {
+  type: 'success' | 'error' | 'info';
+  title: string;
+  message: string;
+}
 
 export const FuturisticContact: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -11,6 +33,17 @@ export const FuturisticContact: React.FC = () => {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [toast, setToast] = useState<ToastState | null>(null);
+
+  // Auto-dismiss toast after 6 seconds
+  useEffect(() => {
+    if (toast && toast.type !== 'info') {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -24,25 +57,74 @@ export const FuturisticContact: React.FC = () => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      confetti({
-        particleCount: 85,
-        spread: 80,
-        origin: { y: 0.7 },
-        colors: ['#06b6d4', '#10b981', '#8b5cf6'],
+    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
+      setToast({
+        type: 'error',
+        title: 'Validation Incomplete',
+        message: 'Please provide your name, valid email address, and message.',
       });
-      window.location.href = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
-        formState.subject || 'Engineering Inquiry for Ruthvij Rane'
-      )}&body=${encodeURIComponent(
-        `Hi Ruthvij,\n\nName: ${formState.name}\nEmail: ${formState.email}\n\nMessage:\n${formState.message}`
-      )}`;
-    }, 700);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setToast({
+      type: 'info',
+      title: 'Transmitting Packet...',
+      message: 'Dispatching encrypted transmission directly to ruthvijrane2001@gmail.com',
+    });
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/ruthvijrane2001@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          _subject: formState.subject
+            ? `[Portfolio Inquiry] ${formState.subject}`
+            : `[Portfolio Inquiry] Transmission from ${formState.name}`,
+          message: formState.message,
+          _replyto: formState.email,
+          _captcha: 'false',
+          _template: 'table',
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok || data.success === 'true' || data.success === true) {
+        setIsSubmitting(false);
+        setSubmitted(true);
+        setToast({
+          type: 'success',
+          title: 'Transmission Confirmed',
+          message: 'Your message has been received by ruthvijrane2001@gmail.com. Ruthvij will reply shortly.',
+        });
+        confetti({
+          particleCount: 90,
+          spread: 85,
+          origin: { y: 0.7 },
+          colors: ['#06b6d4', '#10b981', '#8b5cf6'],
+        });
+        setFormState({ name: '', email: '', subject: '', message: '' });
+      } else {
+        throw new Error(data.message || 'Transmission endpoint declined');
+      }
+    } catch (err: any) {
+      console.warn('Form routing fallback:', err);
+      setIsSubmitting(false);
+      setToast({
+        type: 'error',
+        title: 'Connection Resistance Encountered',
+        message: 'Browser security or ad-blockers prevented direct HTTP dispatch. Use direct mail link below.',
+      });
+    }
   };
 
   return (
@@ -173,10 +255,10 @@ export const FuturisticContact: React.FC = () => {
                   <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-white">Transmission Initiated!</h4>
-                  <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto">
-                    Your email client has been prepared. You can also reach me directly at{' '}
-                    <strong className="text-cyan-300 font-mono">{PERSONAL_INFO.email}</strong>.
+                  <h4 className="text-lg font-bold text-white">Transmission Delivered!</h4>
+                  <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                    Your transmission has been securely routed directly to{' '}
+                    <strong className="text-cyan-300 font-mono">ruthvijrane2001@gmail.com</strong>. Ruthvij will get back to you promptly.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
@@ -295,7 +377,10 @@ export const FuturisticContact: React.FC = () => {
                     className="w-full mt-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 text-slate-950 font-bold text-sm shadow-[0_0_25px_rgba(6,182,212,0.35)] hover:opacity-95 transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <span>Transmitting Packet...</span>
+                      <span className="flex items-center gap-2">
+                        <Loader2 className="w-4 h-4 animate-spin text-slate-950" />
+                        Transmitting to ruthvijrane2001@gmail.com...
+                      </span>
                     ) : (
                       <>
                         <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -311,6 +396,67 @@ export const FuturisticContact: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Real-time Floating Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className={`fixed bottom-6 right-6 z-50 max-w-md w-[calc(100vw-3rem)] p-4 rounded-2xl backdrop-blur-2xl border shadow-2xl flex items-start gap-3 ${
+              toast.type === 'success'
+                ? 'bg-emerald-950/95 border-emerald-500/50 text-emerald-100 shadow-[0_0_30px_rgba(16,185,129,0.35)]'
+                : toast.type === 'error'
+                ? 'bg-rose-950/95 border-rose-500/50 text-rose-100 shadow-[0_0_30px_rgba(244,63,94,0.35)]'
+                : 'bg-slate-900/95 border-cyan-500/50 text-cyan-100 shadow-[0_0_30px_rgba(6,182,212,0.35)]'
+            }`}
+          >
+            <div className="mt-0.5 flex-shrink-0">
+              {toast.type === 'success' ? (
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              ) : toast.type === 'error' ? (
+                <AlertCircle className="w-5 h-5 text-rose-400" />
+              ) : (
+                <Loader2 className="w-5 h-5 text-cyan-400 animate-spin" />
+              )}
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
+                {toast.title}
+              </h5>
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                {toast.message}
+              </p>
+
+              {toast.type === 'error' && (
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                  <a
+                    href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
+                      formState.subject || 'Engineering Opportunity / Inquiry'
+                    )}&body=${encodeURIComponent(
+                      `Hi Ruthvij,\n\nName: ${formState.name}\nEmail: ${formState.email}\n\nMessage:\n${formState.message}`
+                    )}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-mono font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/40 transition-colors"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Open Mail Client</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => setToast(null)}
+              className="text-slate-400 hover:text-white transition-colors p-1"
+              aria-label="Dismiss notification"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

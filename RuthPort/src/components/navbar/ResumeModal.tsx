@@ -82,6 +82,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               <span>Print / Save PDF</span>
             </button>
 
+            {/* Download Soft Copy Resume PDF */}
+            <a
+              href="/resume.pdf"
+              download="Ruthvij_Rane_Resume.pdf"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 transition-colors shadow-sm"
+              title="Download exact soft copy resume PDF"
+            >
+              <Download className="w-4 h-4 text-emerald-400" />
+              <span>Download PDF</span>
+            </a>
+
             {/* Copy Email Button */}
             <button
               onClick={handleCopyEmail}

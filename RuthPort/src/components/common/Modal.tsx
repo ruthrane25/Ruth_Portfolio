@@ -42,7 +42,7 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div className="modal-root-wrapper fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -50,7 +50,7 @@ export const Modal: React.FC<ModalProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md no-print"
           />
 
           {/* Modal Box */}
@@ -59,15 +59,15 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className={`relative w-full ${maxWidth} max-h-[90vh] my-auto flex flex-col rounded-2xl border border-cyan-500/30 bg-[#090d16]/95 backdrop-blur-2xl shadow-[0_0_50px_rgba(6,182,212,0.25)] overflow-hidden z-10`}
+            className={`modal-dialog-box relative w-full ${maxWidth} max-h-[90vh] my-auto flex flex-col rounded-2xl border border-cyan-500/30 bg-[#090d16]/95 backdrop-blur-2xl shadow-[0_0_50px_rgba(6,182,212,0.25)] overflow-hidden z-10`}
             role="dialog"
             aria-modal="true"
           >
             {/* Top glowing accent line */}
-            <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-indigo-500" />
+            <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-indigo-500 no-print" />
 
             {/* Modal Header */}
-            <div className="flex items-start justify-between p-6 border-b border-white/[0.08] bg-slate-900/40">
+            <div className="flex items-start justify-between p-6 border-b border-white/[0.08] bg-slate-900/40 no-print">
               <div className="pr-6">
                 {badge && (
                   <span className="inline-block px-2.5 py-0.5 mb-2 rounded-full text-xs font-mono font-medium text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
@@ -95,7 +95,7 @@ export const Modal: React.FC<ModalProps> = ({
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)] space-y-6">
+            <div className="modal-scroll-body p-6 overflow-y-auto max-h-[calc(90vh-140px)] space-y-6">
               {children}
             </div>
           </motion.div>

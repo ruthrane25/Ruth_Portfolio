@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, FileText, Sparkles, ChevronDown, Cpu, Terminal, Compass } from 'lucide-react';
+import { ArrowRight, FileText, Sparkles, ChevronDown, Cpu, Terminal, Compass, Download } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 import { HeroThreeCanvas } from '../../simulations/HeroThreeCanvas';
 import { IndustrialTelemetryVisual } from './IndustrialTelemetryVisual';
@@ -28,14 +28,13 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
     return () => clearInterval(timer);
   }, [roles.length]);
 
-  const handleResumeClick = () => {
+  const handleResumeDownload = () => {
     confetti({
       particleCount: 65,
       spread: 70,
       origin: { y: 0.75 },
       colors: ['#06b6d4', '#10b981', '#8b5cf6'],
     });
-    onOpenResume();
   };
 
   const techPills = [
@@ -150,13 +149,27 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </a>
 
-              {/* Sparkle Burst Resume Download Button */}
-              <button
-                onClick={handleResumeClick}
-                className="px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800/90 border border-white/10 hover:border-violet-500/40 backdrop-blur-xl transition-all duration-300 flex items-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.3)] focus:outline-none focus:ring-2 focus:ring-violet-400 group"
+              {/* Soft Copy Resume Download Button */}
+              <a
+                href="/resume.pdf"
+                download="Ruthvij_Rane_Resume.pdf"
+                onClick={handleResumeDownload}
+                className="px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800/90 border border-white/10 hover:border-emerald-500/40 backdrop-blur-xl transition-all duration-300 flex items-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.3)] focus:outline-none focus:ring-2 focus:ring-emerald-400 group"
+                title="Download Ruthvij Rane's Official Resume PDF"
               >
-                <Sparkles className="w-4 h-4 text-violet-400 transition-transform group-hover:rotate-12" />
+                <Download className="w-4 h-4 text-emerald-400 transition-transform group-hover:scale-110" />
                 <span>Download Resume</span>
+              </a>
+
+              {/* View Interactive CV Modal Button */}
+              <button
+                type="button"
+                onClick={onOpenResume}
+                className="px-4 py-3.5 rounded-xl text-sm font-mono text-cyan-400/90 hover:text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 transition-all flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                title="Preview Interactive CV online"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>View CV</span>
               </button>
             </motion.div>
 
