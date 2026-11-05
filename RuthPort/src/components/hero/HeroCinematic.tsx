@@ -151,11 +151,11 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
 
               {/* Soft Copy Resume Download Button */}
               <a
-                href="/Ruthvij_Rane_Resume_SDA.pdf"
-                download="Ruthvij_Rane_Resume_SDA.pdf"
+                href="/Ruthvij_Rane_Resume.pdf"
+                download="Ruthvij_Rane_Resume.pdf"
                 onClick={handleResumeDownload}
                 className="px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800/90 border border-white/10 hover:border-emerald-500/40 backdrop-blur-xl transition-all duration-300 flex items-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.3)] focus:outline-none focus:ring-2 focus:ring-emerald-400 group"
-                title="Download Ruthvij Rane's Official Resume PDF (Ruthvij_Rane_Resume_SDA.pdf)"
+                title="Download Ruthvij Rane's Official Resume PDF (Ruthvij_Rane_Resume.pdf)"
               >
                 <Download className="w-4 h-4 text-emerald-400 transition-transform group-hover:scale-110" />
                 <span>Download Resume</span>
