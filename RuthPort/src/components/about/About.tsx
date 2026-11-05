@@ -2,13 +2,13 @@ import React from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { TiltCard } from '../common/TiltCard';
 import { HybridTerminal } from './HybridTerminal';
-import { MapPin, Terminal, Layers, Code, Radio, CheckCircle2, Cpu, Globe } from 'lucide-react';
+import { MapPin, Terminal } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
 
 export const About: React.FC = () => {
   return (
-    <section id="about" className="relative py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="relative py-24 sm:py-32 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <SectionHeader

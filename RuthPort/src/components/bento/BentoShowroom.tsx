@@ -10,12 +10,12 @@ import { Cpu, Layers, BarChart3, Navigation, Github, ArrowUpRight, CheckCircle2 
 
 export const BentoShowroom: React.FC = () => {
   return (
-    <section id="showroom" className="relative py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="showroom" className="relative py-24 sm:py-32 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <SectionHeader
-          badge="03 // INTERACTIVE SHOWROOM"
+          badge="04 // INTERACTIVE SHOWROOM"
           title="Featured Projects &"
           highlightedText="Live Machine Simulators"
           description="Interact directly with the physical simulations and architectural modules I engineered — from sub-micron laser galvo motion and sterile 4D bioprinting to autonomous drone radar."
@@ -23,15 +23,15 @@ export const BentoShowroom: React.FC = () => {
         />
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-full">
           
-          {/* Bento Card 1: Industrial Laser Scribing & Material Processing */}
+          {/* Bento Card 1: Industrial Laser Scribing & Photovoltaic Systems Suite */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-all"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -43,16 +43,16 @@ export const BentoShowroom: React.FC = () => {
                 <span className="text-xs font-mono text-slate-400">Specialize Products Pvt. Ltd.</span>
               </div>
 
-              <h3 className="text-2xl font-black text-white tracking-tight">
-                Industrial Laser Scribing & Material Processing Software
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                Industrial Laser Scribing & Photovoltaic Systems Suite
               </h3>
 
-              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Cross-platform desktop control suite operating high-precision thin-film photovoltaic (solar) laser scribers (P1/P2/P3 cuts), semiconductor wafer patterners, and fiber laser markers with telemetry and spatial toolpath generation.
+              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                Cross-platform desktop control suite operating high-precision thin-film photovoltaic (solar) laser scribers (P1/P2/P3 cuts), mini scribers, wafer patterners, and fiber laser markers with telemetry and spatial toolpath generation.
               </p>
 
               {/* Embedded Interactive Canvas Simulator */}
-              <div className="mt-6 mb-6">
+              <div className="mt-6 mb-6 w-full max-w-full overflow-hidden">
                 <LaserToolpathCanvas />
               </div>
 
@@ -60,7 +60,7 @@ export const BentoShowroom: React.FC = () => {
               <div className="space-y-2 text-xs text-slate-300">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span>Sub-micron coordinate interpolation engine (<strong className="text-white">&lt; 1 µm</strong> fidelity).</span>
+                  <span>Sub-micron coordinate interpolation engine (<strong className="text-white font-semibold">&lt; 1 µm</strong> fidelity).</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0 mt-0.5" />
@@ -93,13 +93,13 @@ export const BentoShowroom: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Bento Card 2: 4D/3D Bio-Printer & Additive Systems */}
+          {/* Bento Card 2: 4D/3D Bio-Printer & Additive Manufacturing Software */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-emerald-500/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-emerald-400 transition-all"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-emerald-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-emerald-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -111,16 +111,16 @@ export const BentoShowroom: React.FC = () => {
                 <span className="text-xs font-mono text-slate-400">Specialize Products Pvt. Ltd.</span>
               </div>
 
-              <h3 className="text-2xl font-black text-white tracking-tight">
-                4D/3D Bio-Printer & Advanced Additive Systems
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                4D/3D Bio-Printer & Additive Manufacturing Software
               </h3>
 
-              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                 Sterile Class 100 HEPA environment bioprinting control software engineered for living cell hydrogels, pneumatic multi-syringe micro-stepping, and synchronized UV photocuring cycles (365nm / 395nm).
               </p>
 
               {/* Embedded Interactive Canvas Simulator */}
-              <div className="mt-6 mb-6">
+              <div className="mt-6 mb-6 w-full max-w-full overflow-hidden">
                 <LayerDepositionVisualizer />
               </div>
 
@@ -128,7 +128,7 @@ export const BentoShowroom: React.FC = () => {
               <div className="space-y-2 text-xs text-slate-300">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span>Pneumatic pressure regulation loops controlling hydrogel flow within <strong className="text-white">± 1 mbar</strong>.</span>
+                  <span>Pneumatic pressure regulation loops controlling hydrogel flow within <strong className="text-white font-semibold">± 1 mbar</strong>.</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -163,11 +163,11 @@ export const BentoShowroom: React.FC = () => {
 
           {/* Bento Card 3: VC Tech Centralized Operations Platform */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-violet-500/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-violet-400 transition-all"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-violet-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-violet-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -179,16 +179,16 @@ export const BentoShowroom: React.FC = () => {
                 <span className="text-xs font-mono text-slate-400">VC Technosolutions Pvt. Ltd.</span>
               </div>
 
-              <h3 className="text-2xl font-black text-white tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                 VC Tech Centralized Operations Platform
               </h3>
 
-              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                 Centralized internal enterprise platform directed across a 3-engineer team, eradicating manual Excel-based tracking with real-time analytics dashboards and delivering an authenticated <strong className="text-emerald-400 font-bold">+25% efficiency gain</strong>.
               </p>
 
               {/* Embedded Interactive Analytics Widget */}
-              <div className="mt-6 mb-6">
+              <div className="mt-6 mb-6 w-full max-w-full overflow-hidden">
                 <OperationsAnalyticsChart />
               </div>
 
@@ -196,7 +196,7 @@ export const BentoShowroom: React.FC = () => {
               <div className="space-y-2 text-xs text-slate-300">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-violet-400 flex-shrink-0 mt-0.5" />
-                  <span>Sub-100ms reactive client page transitions built with <strong className="text-white">SvelteKit & Tailwind CSS</strong>.</span>
+                  <span>Sub-100ms reactive client page transitions built with <strong className="text-white font-semibold">SvelteKit & Tailwind CSS</strong>.</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-violet-400 flex-shrink-0 mt-0.5" />
@@ -233,11 +233,11 @@ export const BentoShowroom: React.FC = () => {
 
           {/* Bento Card 4: Autonomous Drone Delivery System */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-6 sm:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-all"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -249,16 +249,16 @@ export const BentoShowroom: React.FC = () => {
                 <span className="text-xs font-mono text-slate-400">Pillai College / Mumbai Univ</span>
               </div>
 
-              <h3 className="text-2xl font-black text-white tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                 Autonomous Drone Delivery Prototype
               </h3>
 
-              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                 Autonomous quadcopter aerial delivery prototype engineering real-time waypoint navigation, 360-degree LiDAR obstacle sensing, and automated collision avoidance algorithms.
               </p>
 
               {/* Embedded Interactive Flight Radar */}
-              <div className="mt-6 mb-6">
+              <div className="mt-6 mb-6 w-full max-w-full overflow-hidden">
                 <DroneRadarVisualizer />
               </div>
 
@@ -274,7 +274,7 @@ export const BentoShowroom: React.FC = () => {
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                  <span>Target package drop within precision radius of <strong className="text-white">± 1.5 meters</strong>.</span>
+                  <span>Target package drop within precision radius of <strong className="text-white font-semibold">± 1.5 meters</strong>.</span>
                 </div>
               </div>
             </div>

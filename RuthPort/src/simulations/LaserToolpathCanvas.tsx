@@ -198,8 +198,11 @@ export const LaserToolpathCanvas: React.FC = () => {
     };
   }, [isRunning, activeMode]);
 
-  // Click on canvas to command laser to that point
-  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+
+  // Click & Drag on canvas to command laser scribing path
+  const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    setIsMouseDown(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -214,9 +217,61 @@ export const LaserToolpathCanvas: React.FC = () => {
       mode: activeMode,
     });
 
+    laserRef.current.x = clickX;
+    laserRef.current.y = clickY;
     laserRef.current.targetX = clickX;
     laserRef.current.targetY = clickY;
     setIsRunning(true);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!isMouseDown) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const posX = e.clientX - rect.left;
+    const posY = e.clientY - rect.top;
+
+    const dx = posX - laserRef.current.x;
+    const dy = posY - laserRef.current.y;
+    if (Math.hypot(dx, dy) < 6) return; // Smooth vector throttling
+
+    linesRef.current.push({
+      x1: laserRef.current.x,
+      y1: laserRef.current.y,
+      x2: posX,
+      y2: posY,
+      mode: activeMode,
+    });
+
+    // Cap maximum vector lines to prevent memory bloat
+    if (linesRef.current.length > 55) {
+      linesRef.current.splice(0, linesRef.current.length - 55);
+    }
+
+    laserRef.current.x = posX;
+    laserRef.current.y = posY;
+    laserRef.current.targetX = posX;
+    laserRef.current.targetY = posY;
+
+    // Emit live plasma sparks (capped)
+    if (particlesRef.current.length < 35) {
+      for (let i = 0; i < 3; i++) {
+        particlesRef.current.push({
+          x: posX,
+          y: posY,
+          vx: (Math.random() - 0.5) * 4,
+          vy: (Math.random() - 0.5) * 4,
+          life: 0,
+          maxLife: Math.random() * 14 + 8,
+          color: activeMode === 'P1' ? '#22d3ee' : activeMode === 'P2' ? '#34d399' : '#a78bfa',
+        });
+      }
+    }
+  };
+
+  const handlePointerUp = () => {
+    setIsMouseDown(false);
   };
 
   const handleReset = () => {
@@ -262,14 +317,18 @@ export const LaserToolpathCanvas: React.FC = () => {
       </div>
 
       {/* Interactive Laser Canvas */}
-      <div className="relative cursor-crosshair">
+      <div className="relative cursor-crosshair select-none touch-none">
         <canvas
           ref={canvasRef}
-          onClick={handleCanvasClick}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerUp}
           className="w-full h-[220px] block"
         />
-        <div className="absolute top-2 left-3 text-[10px] font-mono text-cyan-300/80 bg-black/60 px-2 py-0.5 rounded border border-cyan-500/20 pointer-events-none">
-          Click canvas to command galvo laser toolpath
+        <div className="absolute top-2 left-3 text-[10px] font-mono text-cyan-300/90 bg-black/70 px-2 py-0.5 rounded border border-cyan-500/30 pointer-events-none flex items-center gap-1.5 shadow">
+          <Zap className="w-3 h-3 text-cyan-400 animate-pulse" />
+          Click or Drag on wafer grid to fire live laser scribing path
         </div>
       </div>
 

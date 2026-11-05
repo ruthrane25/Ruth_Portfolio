@@ -27,12 +27,12 @@ export const IndustrialSystems: React.FC = () => {
   });
 
   return (
-    <section id="industrial" className="relative py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="industrial" className="relative py-24 sm:py-32 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <SectionHeader
-          badge="04 // INDUSTRIAL FLAGSHIPS"
+          badge="05 // INDUSTRIAL FLAGSHIPS"
           title="Industrial Systems & Machine"
           highlightedText="Control Software Portfolio"
           description="Engineered the full application architecture, graphical user interfaces, hardware drivers, and real-time motion logic at Specialize Products Pvt. Ltd."
@@ -40,15 +40,15 @@ export const IndustrialSystems: React.FC = () => {
         />
 
         {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-10 p-2 rounded-2xl bg-slate-900/60 border border-white/[0.06] backdrop-blur-xl">
+        <div className="flex flex-wrap items-center gap-2 mb-10 p-2 rounded-2xl bg-slate-900/90 border border-white/[0.08] backdrop-blur-xl w-full max-w-full">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilterCategory(cat)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all ${
                 filterCategory === cat
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] border border-cyan-400'
+                  : 'text-slate-200 bg-slate-800/80 border border-slate-700/80 hover:text-white hover:border-cyan-500/50 hover:bg-slate-800'
               }`}
             >
               {cat}
@@ -57,21 +57,21 @@ export const IndustrialSystems: React.FC = () => {
         </div>
 
         {/* Industrial Machines Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full">
           <AnimatePresence>
             {filteredSystems.map((system, idx) => (
               <motion.div
                 key={system.id}
                 layout
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="h-full"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                className="h-full w-full max-w-full overflow-hidden"
               >
                 <TiltCard
                   glowColor={system.accentColor}
-                  className="p-6 sm:p-7 h-full flex flex-col justify-between group"
+                  className="p-6 sm:p-7 h-full flex flex-col justify-between group w-full max-w-full"
                   onClick={() => setSelectedSystem(system)}
                 >
                   <div>

@@ -6,12 +6,12 @@ import { GraduationCap, Award, Users, CheckCircle2, Calendar, MapPin, Sparkles }
 
 export const Education: React.FC = () => {
   return (
-    <section id="education" className="relative py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="education" className="relative py-24 sm:py-32 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <SectionHeader
-          badge="06 // ACADEMICS & RECOGNITION"
+          badge="07 // ACADEMICS & RECOGNITION"
           title="Education, Certifications &"
           highlightedText="Leadership"
           description="A strong academic foundation in Electronics Engineering complemented by industry simulations and community leadership."

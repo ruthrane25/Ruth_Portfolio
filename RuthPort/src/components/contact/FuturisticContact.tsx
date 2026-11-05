@@ -46,12 +46,12 @@ export const FuturisticContact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="relative py-24 sm:py-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="relative py-24 sm:py-32 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
         
         {/* Section Header */}
         <SectionHeader
-          badge="06 // INITIATE TRANSMISSION"
+          badge="08 // INITIATE TRANSMISSION"
           title="Let's Build Something"
           highlightedText="Impactful Together"
           description="Whether you have an industrial automation challenge, a high-precision software architecture project, or a software engineering opportunity, my channels are open."

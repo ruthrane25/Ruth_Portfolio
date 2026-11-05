@@ -146,7 +146,7 @@ export const SkillMatrix3D: React.FC = () => {
         
         {/* Section Header */}
         <SectionHeader
-          badge="04 // TECHNICAL SKILL MATRIX"
+          badge="06 // TECHNICAL SKILL MATRIX"
           title="Interactive 3D Perspective"
           highlightedText="Engineering Arsenal"
           description="A complete, transparent inventory of programming languages, hardware communication protocols, vector parsing engines, and full-stack web frameworks."
@@ -154,9 +154,9 @@ export const SkillMatrix3D: React.FC = () => {
         />
 
         {/* Filter Controls Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 w-full max-w-full">
           {/* Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/80 border border-white/[0.08] backdrop-blur-xl w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/90 border border-white/[0.08] backdrop-blur-xl w-full md:w-auto">
             {[
               { id: 'all', label: 'All Technologies' },
               { id: 'desktop', label: 'Desktop & GUI' },
@@ -171,8 +171,8 @@ export const SkillMatrix3D: React.FC = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all ${
                   activeTab === tab.id
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                    : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] border border-cyan-400'
+                    : 'text-slate-200 bg-slate-800/80 border border-slate-700/80 hover:text-white hover:border-cyan-500/50 hover:bg-slate-800'
                 }`}
               >
                 {tab.label}
@@ -188,27 +188,27 @@ export const SkillMatrix3D: React.FC = () => {
               placeholder="Filter skills (e.g. PySide, G-code)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900/80 border border-white/[0.08] focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-xs sm:text-sm text-slate-200 placeholder-slate-500 transition-all font-mono"
+              className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900/90 border border-white/[0.08] focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-400 text-xs sm:text-sm text-slate-100 placeholder-slate-400 transition-all font-mono"
             />
           </div>
         </div>
 
         {/* 3D Perspective Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full">
           <AnimatePresence>
             {filteredCategories.map((cat, catIdx) => (
               <motion.div
                 key={cat.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3, delay: catIdx * 0.05 }}
-                className="h-full"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.25, delay: catIdx * 0.04 }}
+                className="h-full w-full max-w-full overflow-hidden"
               >
                 <TiltCard
                   glowColor={cat.accent === 'violet' ? 'indigo' : cat.accent}
-                  className="p-6 h-full flex flex-col justify-between"
+                  className="p-6 h-full flex flex-col justify-between w-full max-w-full"
                 >
                   <div>
                     {/* Header */}

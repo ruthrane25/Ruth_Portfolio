@@ -77,7 +77,7 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                 </span>
                 <span className="text-xs font-mono font-medium text-emerald-300">
-                  Available for Software & AI/Data Roles
+                  Available for Software Developer, Data Analyst & AI/ML Roles
                 </span>
                 <span className="text-slate-600 hidden sm:inline">|</span>
                 <span className="text-xs font-mono text-slate-400 hidden sm:inline">
@@ -97,7 +97,7 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
               <span className="inline-block animate-wave origin-bottom-right">👋</span>
             </motion.h2>
 
-            {/* Main Headline with 3D Flip-Blur Role Ticker */}
+            {/* Main Headline with 3D Flip Role Ticker (Crisp, No Blurring) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -110,11 +110,11 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={currentRoleIndex}
-                      initial={{ opacity: 0, y: 25, filter: 'blur(10px)', rotateX: 60 }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)', rotateX: 0 }}
-                      exit={{ opacity: 0, y: -25, filter: 'blur(10px)', rotateX: -60 }}
-                      transition={{ duration: 0.5, ease: 'easeOut' }}
-                      className="bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 bg-clip-text text-transparent inline-block"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.35, ease: 'easeInOut' }}
+                      className="bg-gradient-to-r from-cyan-400 via-emerald-400 to-violet-400 bg-clip-text text-transparent inline-block font-black"
                     >
                       {roles[currentRoleIndex]}
                     </motion.span>
@@ -155,7 +155,7 @@ export const HeroCinematic: React.FC<HeroCinematicProps> = ({ onOpenResume }) =>
                 onClick={handleResumeClick}
                 className="px-6 py-3.5 rounded-xl text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800/90 border border-white/10 hover:border-violet-500/40 backdrop-blur-xl transition-all duration-300 flex items-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.3)] focus:outline-none focus:ring-2 focus:ring-violet-400 group"
               >
-                <Sparkles className="w-4 h-4 text-violet-400 transition-transform group-hover:scale-125" />
+                <Sparkles className="w-4 h-4 text-violet-400 transition-transform group-hover:rotate-12" />
                 <span>Download Resume</span>
               </button>
             </motion.div>
