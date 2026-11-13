@@ -34,13 +34,16 @@ export const LaserToolpathCanvas: React.FC = () => {
 
   // Pre-seed some default scribing paths
   useEffect(() => {
+    const initialWidth = canvasRef.current?.parentElement?.clientWidth || 360;
+    const rightMargin = Math.max(120, initialWidth - 30);
     linesRef.current = [
-      { x1: 30, y1: 40, x2: 370, y2: 40, mode: 'P1' },
-      { x1: 30, y1: 75, x2: 370, y2: 75, mode: 'P2' },
-      { x1: 30, y1: 110, x2: 370, y2: 110, mode: 'P3' },
-      { x1: 30, y1: 145, x2: 370, y2: 145, mode: 'P1' },
-      { x1: 30, y1: 180, x2: 370, y2: 180, mode: 'P2' },
+      { x1: 20, y1: 40, x2: rightMargin, y2: 40, mode: 'P1' },
+      { x1: 20, y1: 75, x2: rightMargin, y2: 75, mode: 'P2' },
+      { x1: 20, y1: 110, x2: rightMargin, y2: 110, mode: 'P3' },
+      { x1: 20, y1: 145, x2: rightMargin, y2: 145, mode: 'P1' },
+      { x1: 20, y1: 180, x2: rightMargin, y2: 180, mode: 'P2' },
     ];
+    laserRef.current.targetX = rightMargin;
   }, []);
 
   // Main canvas animation loop
@@ -275,32 +278,34 @@ export const LaserToolpathCanvas: React.FC = () => {
   };
 
   const handleReset = () => {
+    const width = canvasRef.current?.width || 360;
+    const rightMargin = Math.max(120, width - 30);
     linesRef.current = [
-      { x1: 30, y1: 40, x2: 370, y2: 40, mode: 'P1' },
-      { x1: 30, y1: 75, x2: 370, y2: 75, mode: 'P2' },
-      { x1: 30, y1: 110, x2: 370, y2: 110, mode: 'P3' },
+      { x1: 20, y1: 40, x2: rightMargin, y2: 40, mode: 'P1' },
+      { x1: 20, y1: 75, x2: rightMargin, y2: 75, mode: 'P2' },
+      { x1: 20, y1: 110, x2: rightMargin, y2: 110, mode: 'P3' },
     ];
-    laserRef.current = { x: 30, y: 40, targetX: 370, targetY: 40, speed: 2.8, lineIndex: 0 };
+    laserRef.current = { x: 20, y: 40, targetX: rightMargin, targetY: 40, speed: 2.8, lineIndex: 0 };
     particlesRef.current = [];
   };
 
   return (
     <div className="relative w-full rounded-2xl bg-[#030712]/90 border border-cyan-500/30 overflow-hidden shadow-2xl backdrop-blur-xl">
       {/* Top Header & Mode Toggle */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 border-b border-white/[0.08] bg-slate-900/60">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping" />
-          <span className="text-xs font-mono font-bold text-white tracking-wide">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3.5 border-b border-white/[0.08] bg-slate-900/60">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping shrink-0" />
+          <span className="text-[11px] sm:text-xs font-mono font-bold text-white tracking-wide truncate">
             SP2L-LSM LASER SCRIBING SIMULATOR
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {(['P1', 'P2', 'P3'] as const).map((mode) => (
             <button
               key={mode}
               onClick={() => setActiveMode(mode)}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-mono font-bold transition-all ${
+              className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-bold transition-all ${
                 activeMode === mode
                   ? mode === 'P1'
                     ? 'bg-cyan-500 text-slate-950 shadow-[0_0_12px_#06b6d4]'
@@ -324,40 +329,40 @@ export const LaserToolpathCanvas: React.FC = () => {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerLeave={handlePointerUp}
-          className="w-full h-[220px] block"
+          className="w-full h-[200px] sm:h-[220px] block"
         />
-        <div className="absolute top-2 left-3 text-[10px] font-mono text-cyan-300/90 bg-black/70 px-2 py-0.5 rounded border border-cyan-500/30 pointer-events-none flex items-center gap-1.5 shadow">
-          <Zap className="w-3 h-3 text-cyan-400 animate-pulse" />
-          Click or Drag on wafer grid to fire live laser scribing path
+        <div className="absolute top-2 left-3 text-[9px] sm:text-[10px] font-mono text-cyan-300/90 bg-black/70 px-2 py-0.5 rounded border border-cyan-500/30 pointer-events-none flex items-center gap-1.5 shadow max-w-[90%] truncate">
+          <Zap className="w-3 h-3 text-cyan-400 animate-pulse shrink-0" />
+          <span className="truncate">Touch or Drag on wafer grid to fire laser</span>
         </div>
       </div>
 
       {/* Live Machine Telemetry HUD */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-slate-950/80 border-t border-white/[0.08] text-xs font-mono">
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-cyan-500/20">
-          <span className="text-[10px] text-slate-400 block">X-Coordinate</span>
-          <span className="font-bold text-cyan-300 text-sm">{(laserPos.x * 1.85).toFixed(2)} mm</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 p-2.5 sm:p-3 bg-slate-950/80 border-t border-white/[0.08] text-xs font-mono">
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-cyan-500/20">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">X-Coordinate</span>
+          <span className="font-bold text-cyan-300 text-xs sm:text-sm">{(laserPos.x * 1.85).toFixed(2)} mm</span>
         </div>
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-emerald-500/20">
-          <span className="text-[10px] text-slate-400 block">Y-Coordinate</span>
-          <span className="font-bold text-emerald-300 text-sm">{(laserPos.y * 1.85).toFixed(2)} mm</span>
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-emerald-500/20">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Y-Coordinate</span>
+          <span className="font-bold text-emerald-300 text-xs sm:text-sm">{(laserPos.y * 1.85).toFixed(2)} mm</span>
         </div>
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-violet-500/20">
-          <span className="text-[10px] text-slate-400 block">Pulse Frequency</span>
-          <span className="font-bold text-violet-300 text-sm">20.0 kHz</span>
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-violet-500/20">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Pulse Frequency</span>
+          <span className="font-bold text-violet-300 text-xs sm:text-sm">20.0 kHz</span>
         </div>
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-white/10">
-          <span className="text-[10px] text-slate-400 block">Galvo Scan Speed</span>
-          <span className="font-bold text-slate-100 text-sm">1,850 mm/s</span>
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-white/10">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Galvo Speed</span>
+          <span className="font-bold text-slate-100 text-xs sm:text-sm truncate">1,850 mm/s</span>
         </div>
       </div>
 
       {/* Control Actions */}
-      <div className="flex items-center justify-between p-3 border-t border-white/[0.08] bg-slate-900/50">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3 border-t border-white/[0.08] bg-slate-900/50">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <button
             onClick={() => setIsRunning(!isRunning)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition-all"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition-all active:scale-95"
           >
             <Play className={`w-3.5 h-3.5 ${isRunning ? 'text-emerald-400' : 'text-slate-400'}`} />
             {isRunning ? 'Pause Beam' : 'Resume Laser'}
@@ -365,16 +370,16 @@ export const LaserToolpathCanvas: React.FC = () => {
 
           <button
             onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 bg-slate-800 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono text-slate-400 bg-slate-800 hover:text-white transition-colors active:scale-95"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            Reset Substrate
+            Reset
           </button>
         </div>
 
-        <div className="text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
-          <Activity className="w-3.5 h-3.5 animate-pulse" />
-          <span>Sub-micron Repeatability &lt; 1.0 µm</span>
+        <div className="text-[10px] sm:text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+          <Activity className="w-3.5 h-3.5 animate-pulse shrink-0" />
+          <span>Repeatability &lt; 1.0 µm</span>
         </div>
       </div>
     </div>

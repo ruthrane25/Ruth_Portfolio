@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Terminal, Play, CheckCircle2, Cpu, RefreshCw, Layers } from 'lucide-react';
 
 export const HybridTerminal: React.FC = () => {
@@ -13,6 +13,17 @@ export const HybridTerminal: React.FC = () => {
     '🚀 HYBRID ARCHITECTURE STATUS: 100% OPERATIONAL',
   ]);
   const [isExecuting, setIsExecuting] = useState(false);
+  const terminalBodyRef = useRef<HTMLDivElement>(null);
+
+  // Automatically scroll down when new logs or commands arrive
+  useEffect(() => {
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTo({
+        top: terminalBodyRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [logs, isExecuting]);
 
   const runCommand = (cmd: string, output: string[]) => {
     setIsExecuting(true);
@@ -46,26 +57,29 @@ export const HybridTerminal: React.FC = () => {
   return (
     <div className="relative w-full rounded-2xl bg-[#030712]/95 border border-cyan-500/30 overflow-hidden shadow-2xl backdrop-blur-xl scanline-overlay font-mono">
       {/* Terminal Titlebar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-slate-900/80 border-b border-white/[0.08]">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-          <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-          <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-          <span className="ml-2 text-xs text-slate-400 flex items-center gap-1.5">
-            <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-            ruthvij@specialize-workstation:~
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-900/80 border-b border-white/[0.08] gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+          <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-rose-500/80 shrink-0" />
+          <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-amber-500/80 shrink-0" />
+          <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-emerald-500/80 shrink-0" />
+          <span className="ml-1 sm:ml-2 text-[11px] sm:text-xs text-slate-400 flex items-center gap-1.5 truncate">
+            <Terminal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+            <span className="truncate">ruthvij@specialize-workstation:~</span>
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
             PySide6 + SvelteKit
           </span>
         </div>
       </div>
 
-      {/* Terminal Output Body */}
-      <div className="p-4 sm:p-5 h-[280px] overflow-y-auto space-y-1.5 text-xs text-slate-300">
+      {/* Terminal Output Body with Auto-Scroll */}
+      <div
+        ref={terminalBodyRef}
+        className="p-3 sm:p-5 h-[260px] sm:h-[280px] overflow-y-auto space-y-1.5 text-xs text-slate-300 scroll-smooth"
+      >
         {logs.map((log, idx) => {
           const isCommand = log.startsWith('$');
           const isSuccess = log.includes('✔') || log.includes('OPERATIONAL') || log.includes('ACK');
@@ -74,7 +88,7 @@ export const HybridTerminal: React.FC = () => {
           return (
             <div
               key={idx}
-              className={`leading-relaxed ${
+              className={`leading-relaxed break-words ${
                 isCommand
                   ? 'text-cyan-400 font-bold'
                   : isSuccess
@@ -97,12 +111,12 @@ export const HybridTerminal: React.FC = () => {
       </div>
 
       {/* Quick Interactive Command Buttons */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-slate-950/90 border-t border-white/[0.08]">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3 bg-slate-950/90 border-t border-white/[0.08]">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <button
             onClick={handleTestSerial}
             disabled={isExecuting}
-            className="px-2.5 py-1.5 rounded-lg text-xs bg-slate-900 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 transition-colors flex items-center gap-1.5"
+            className="px-2 sm:px-2.5 py-1.5 rounded-lg text-[11px] sm:text-xs bg-slate-900 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 transition-colors flex items-center gap-1.5 active:scale-95"
           >
             <Cpu className="w-3.5 h-3.5" />
             Ping COM3 Serial
@@ -111,7 +125,7 @@ export const HybridTerminal: React.FC = () => {
           <button
             onClick={handleTestParser}
             disabled={isExecuting}
-            className="px-2.5 py-1.5 rounded-lg text-xs bg-slate-900 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 transition-colors flex items-center gap-1.5"
+            className="px-2 sm:px-2.5 py-1.5 rounded-lg text-[11px] sm:text-xs bg-slate-900 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 transition-colors flex items-center gap-1.5 active:scale-95"
           >
             <Layers className="w-3.5 h-3.5" />
             Parse DXF Vector
@@ -119,13 +133,13 @@ export const HybridTerminal: React.FC = () => {
 
           <button
             onClick={handleClear}
-            className="px-2 py-1.5 rounded-lg text-xs bg-slate-900 text-slate-400 hover:text-white transition-colors"
+            className="px-2 py-1.5 rounded-lg text-[11px] sm:text-xs bg-slate-900 text-slate-400 hover:text-white transition-colors active:scale-95"
           >
             Clear
           </button>
         </div>
 
-        <span className="text-[10px] text-slate-500">Live Shell Simulation</span>
+        <span className="text-[9px] sm:text-[10px] text-slate-500">Live Shell Simulation</span>
       </div>
     </div>
   );

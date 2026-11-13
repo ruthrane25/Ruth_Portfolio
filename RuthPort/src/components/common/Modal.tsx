@@ -42,7 +42,7 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="modal-root-wrapper fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div className="modal-root-wrapper fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -59,7 +59,7 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className={`modal-dialog-box relative w-full ${maxWidth} max-h-[90vh] my-auto flex flex-col rounded-2xl border border-cyan-500/30 bg-[#090d16]/95 backdrop-blur-2xl shadow-[0_0_50px_rgba(6,182,212,0.25)] overflow-hidden z-10`}
+            className={`modal-dialog-box relative w-full ${maxWidth} max-h-[92vh] sm:max-h-[90vh] my-auto flex flex-col rounded-2xl border border-cyan-500/30 bg-[#090d16]/95 backdrop-blur-2xl shadow-[0_0_50px_rgba(6,182,212,0.25)] overflow-hidden z-10`}
             role="dialog"
             aria-modal="true"
           >
@@ -67,18 +67,18 @@ export const Modal: React.FC<ModalProps> = ({
             <div className="h-1 w-full bg-gradient-to-r from-cyan-400 via-emerald-400 to-indigo-500 no-print" />
 
             {/* Modal Header */}
-            <div className="flex items-start justify-between p-6 border-b border-white/[0.08] bg-slate-900/40 no-print">
-              <div className="pr-6">
+            <div className="flex items-start justify-between p-4 sm:p-6 border-b border-white/[0.08] bg-slate-900/40 no-print gap-3">
+              <div className="min-w-0 pr-2 sm:pr-6">
                 {badge && (
-                  <span className="inline-block px-2.5 py-0.5 mb-2 rounded-full text-xs font-mono font-medium text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
+                  <span className="inline-block px-2 sm:px-2.5 py-0.5 mb-1.5 sm:mb-2 rounded-full text-[10px] sm:text-xs font-mono font-medium text-cyan-400 bg-cyan-500/10 border border-cyan-500/20">
                     {badge}
                   </span>
                 )}
-                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                <h3 className="text-lg sm:text-2xl font-bold text-white tracking-tight">
                   {title}
                 </h3>
                 {subtitle && (
-                  <p className="mt-1 text-sm text-slate-400">
+                  <p className="mt-1 text-xs sm:text-sm text-slate-400">
                     {subtitle}
                   </p>
                 )}
@@ -87,7 +87,7 @@ export const Modal: React.FC<ModalProps> = ({
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                className="p-1.5 sm:p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400 shrink-0"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
@@ -95,7 +95,7 @@ export const Modal: React.FC<ModalProps> = ({
             </div>
 
             {/* Modal Body */}
-            <div className="modal-scroll-body p-6 overflow-y-auto max-h-[calc(90vh-140px)] space-y-6">
+            <div className="modal-scroll-body p-4 sm:p-6 overflow-y-auto max-h-[calc(92vh-120px)] sm:max-h-[calc(90vh-140px)] space-y-4 sm:space-y-6">
               {children}
             </div>
           </motion.div>

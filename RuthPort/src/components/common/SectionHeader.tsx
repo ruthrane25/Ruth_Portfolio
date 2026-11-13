@@ -47,11 +47,11 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.5 }}
-        className="inline-flex items-center gap-2 mb-4"
+        className="inline-flex items-center gap-2 mb-3 sm:mb-4"
       >
         <span
           className={cn(
-            'px-3.5 py-1 rounded-full text-xs font-mono font-semibold tracking-wider uppercase border backdrop-blur-md flex items-center gap-2',
+            'px-2.5 sm:px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-mono font-semibold tracking-wider uppercase border backdrop-blur-md flex items-center gap-1.5 sm:gap-2',
             badgeClasses
           )}
         >
@@ -66,7 +66,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white"
+        className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight"
       >
         {title}{' '}
         {highlightedText && (
@@ -83,7 +83,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-4 text-base sm:text-lg text-slate-400 font-normal leading-relaxed"
+          className="mt-3 sm:mt-4 text-sm sm:text-lg text-slate-400 font-normal leading-relaxed"
         >
           {description}
         </motion.p>

@@ -31,20 +31,20 @@ export const OperationsAnalyticsChart: React.FC = () => {
   return (
     <div className="relative w-full rounded-2xl bg-[#030712]/90 border border-violet-500/30 overflow-hidden shadow-2xl backdrop-blur-xl">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 border-b border-white/[0.08] bg-slate-900/60">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-violet-400 animate-ping" />
-          <span className="text-xs font-mono font-bold text-white tracking-wide">
-            VC TECH OPS HUB // REAL-TIME EFFICIENCY RADAR
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3.5 border-b border-white/[0.08] bg-slate-900/60">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-2.5 h-2.5 rounded-full bg-violet-400 animate-ping shrink-0" />
+          <span className="text-[11px] sm:text-xs font-mono font-bold text-white tracking-wide truncate">
+            VC TECH OPS HUB // EFFICIENCY RADAR
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {(['Live', 'Daily', 'Sprint'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-mono font-bold transition-all ${
+              className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-mono font-bold transition-all ${
                 activeTab === tab
                   ? 'bg-violet-500 text-white shadow-[0_0_12px_#8b5cf6]'
                   : 'bg-slate-800 text-slate-400 hover:text-white'
@@ -57,43 +57,49 @@ export const OperationsAnalyticsChart: React.FC = () => {
       </div>
 
       {/* Hero Metric Banners */}
-      <div className="grid grid-cols-3 gap-2.5 p-3.5 bg-slate-950/70 border-b border-white/[0.06]">
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30">
-          <span className="text-[10px] font-mono text-slate-400 block uppercase">Efficiency Gain</span>
-          <div className="flex items-baseline gap-1 mt-0.5">
-            <span className="text-xl sm:text-2xl font-mono font-black text-emerald-400">+{efficiencyGain}%</span>
-            <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5 p-2.5 sm:p-3.5 bg-slate-950/70 border-b border-white/[0.06]">
+        <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
+          <div>
+            <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 block uppercase">Efficiency Gain</span>
+            <div className="flex items-baseline gap-1 mt-0.5">
+              <span className="text-lg sm:text-2xl font-mono font-black text-emerald-400">+{efficiencyGain}%</span>
+              <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
+            </div>
           </div>
-          <span className="text-[10px] font-mono text-emerald-500/80">Replaced manual Excel</span>
+          <span className="text-[9px] sm:text-[10px] font-mono text-emerald-500/80 mt-0 sm:mt-1">Replaced manual Excel</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-cyan-500/30">
-          <span className="text-[10px] font-mono text-slate-400 block uppercase">Automated Records</span>
-          <div className="text-xl sm:text-2xl font-mono font-black text-cyan-300 mt-0.5">
-            {tasksHandled.toLocaleString()}
+        <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/80 border border-cyan-500/30 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
+          <div>
+            <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 block uppercase">Automated Records</span>
+            <div className="text-lg sm:text-2xl font-mono font-black text-cyan-300 mt-0.5">
+              {tasksHandled.toLocaleString()}
+            </div>
           </div>
-          <span className="text-[10px] font-mono text-cyan-400/80">Zero tracking variance</span>
+          <span className="text-[9px] sm:text-[10px] font-mono text-cyan-400/80 mt-0 sm:mt-1">Zero tracking variance</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-slate-900/80 border border-violet-500/30">
-          <span className="text-[10px] font-mono text-slate-400 block uppercase">Response Latency</span>
-          <div className="text-xl sm:text-2xl font-mono font-black text-violet-400 mt-0.5">
-            &lt; 45 ms
+        <div className="p-2.5 sm:p-3 rounded-xl bg-slate-900/80 border border-violet-500/30 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
+          <div>
+            <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 block uppercase">Response Latency</span>
+            <div className="text-lg sm:text-2xl font-mono font-black text-violet-400 mt-0.5">
+              &lt; 45 ms
+            </div>
           </div>
-          <span className="text-[10px] font-mono text-violet-400/80">SvelteKit + MongoDB</span>
+          <span className="text-[9px] sm:text-[10px] font-mono text-violet-400/80 mt-0 sm:mt-1">SvelteKit + MongoDB</span>
         </div>
       </div>
 
       {/* Interactive SVG Chart */}
-      <div className="p-4 bg-slate-950/50">
-        <div className="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+      <div className="p-3 sm:p-4 bg-slate-950/50">
+        <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-slate-400 mb-2">
           <span>Enterprise Throughput Index</span>
           <span className="text-emerald-400 font-semibold flex items-center gap-1">
             <CheckCircle className="w-3.5 h-3.5" /> High Productivity
           </span>
         </div>
 
-        <div className="relative h-28 w-full">
+        <div className="relative h-24 sm:h-28 w-full">
           <svg className="w-full h-full overflow-visible" viewBox="0 0 320 80" preserveAspectRatio="none">
             <defs>
               <linearGradient id="violetGradient" x1="0" y1="0" x2="0" y2="1">
@@ -138,12 +144,12 @@ export const OperationsAnalyticsChart: React.FC = () => {
       </div>
 
       {/* Live Activity Pipeline Log */}
-      <div className="p-3 border-t border-white/[0.08] bg-slate-900/60 font-mono text-[11px] space-y-1.5">
+      <div className="p-2.5 sm:p-3 border-t border-white/[0.08] bg-slate-900/60 font-mono text-[10px] sm:text-[11px] space-y-1.5">
         {logs.map((log) => (
-          <div key={log.id} className="flex items-center justify-between text-slate-300">
-            <span className="text-slate-500">[{log.time}]</span>
-            <span className="truncate mx-2 text-slate-200">{log.event}</span>
-            <span className={`font-bold ${log.color}`}>{log.status}</span>
+          <div key={log.id} className="flex items-center justify-between text-slate-300 gap-1.5">
+            <span className="text-slate-500 shrink-0">[{log.time}]</span>
+            <span className="truncate flex-1 text-slate-200">{log.event}</span>
+            <span className={`font-bold shrink-0 ${log.color}`}>{log.status}</span>
           </div>
         ))}
       </div>

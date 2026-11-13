@@ -144,17 +144,17 @@ export const LaserTimeline: React.FC = () => {
   return (
     <div className="relative mt-8 max-w-4xl mx-auto w-full">
       {/* Control Switcher Bar */}
-      <div className="flex items-center justify-between gap-3 mb-5 px-1">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 mb-5 px-1">
         <div className="text-xs font-mono text-slate-400 flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+          <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
           <span>Curated Roles & Engineering Impact</span>
         </div>
 
         {/* View Toggle */}
-        <div className="flex items-center bg-slate-900/90 border border-white/10 rounded-lg p-0.5 text-xs font-mono">
+        <div className="flex items-center self-start sm:self-auto bg-slate-900/90 border border-white/10 rounded-lg p-0.5 text-xs font-mono">
           <button
             onClick={() => setViewMode('tabs')}
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md transition-all active:scale-95 ${
               viewMode === 'tabs'
                 ? 'bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/40 shadow-[0_0_10px_rgba(6,182,212,0.2)]'
                 : 'text-slate-400 hover:text-slate-200'
@@ -165,7 +165,7 @@ export const LaserTimeline: React.FC = () => {
           </button>
           <button
             onClick={() => setViewMode('all')}
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md transition-all ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md transition-all active:scale-95 ${
               viewMode === 'all'
                 ? 'bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/40 shadow-[0_0_10px_rgba(6,182,212,0.2)]'
                 : 'text-slate-400 hover:text-slate-200'

@@ -31,7 +31,7 @@ export const BentoShowroom: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-colors w-full max-w-full"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-4 sm:p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -99,7 +99,7 @@ export const BentoShowroom: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-emerald-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-emerald-400 transition-colors w-full max-w-full"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-emerald-500/30 p-4 sm:p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-emerald-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -167,7 +167,7 @@ export const BentoShowroom: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-violet-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-violet-400 transition-colors w-full max-w-full"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-violet-500/30 p-4 sm:p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-violet-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}
@@ -237,7 +237,7 @@ export const BentoShowroom: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-5 sm:p-7 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-colors w-full max-w-full"
+            className="flex flex-col justify-between rounded-3xl bg-slate-900/60 border border-cyan-500/30 p-4 sm:p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-400 transition-colors w-full max-w-full"
           >
             <div>
               {/* Badge & Title */}

@@ -31,40 +31,40 @@ export const IndustrialTelemetryVisual: React.FC = () => {
       <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-500/30 via-emerald-500/20 to-indigo-500/30 blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 animate-pulse-glow" />
 
       {/* Main Container Card */}
-      <div className="relative rounded-2xl border border-cyan-500/30 bg-[#090e1a]/90 backdrop-blur-2xl p-5 sm:p-6 shadow-[0_0_50px_rgba(6,182,212,0.15)] scanline-overlay">
+      <div className="relative rounded-2xl border border-cyan-500/30 bg-[#090e1a]/90 backdrop-blur-2xl p-4 sm:p-6 shadow-[0_0_50px_rgba(6,182,212,0.15)] scanline-overlay">
         
         {/* Terminal Window Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-rose-500/80 border border-rose-400/40" />
-            <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-400/40" />
-            <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-400/40" />
-            <span className="ml-2 font-mono text-xs text-slate-400 flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-              specialize_scripter_core.py • v4.2.0
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-white/[0.08] gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-rose-500/80 border border-rose-400/40 shrink-0" />
+            <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-amber-500/80 border border-amber-400/40 shrink-0" />
+            <div className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full bg-emerald-500/80 border border-emerald-400/40 shrink-0" />
+            <span className="ml-1 sm:ml-2 font-mono text-[11px] sm:text-xs text-slate-400 flex items-center gap-1.5 truncate">
+              <Terminal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+              <span className="truncate">specialize_scripter_core.py</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-              SERIAL LIVE
+              LIVE
             </span>
           </div>
         </div>
 
         {/* Machine Mode Selector */}
-        <div className="mt-4 flex items-center justify-between bg-slate-950/60 p-2.5 rounded-xl border border-white/[0.06]">
-          <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-cyan-400" />
-            <span className="text-xs font-mono font-bold text-white">SP2L-LSM SYSTEM</span>
+        <div className="mt-3 sm:mt-4 flex items-center justify-between bg-slate-950/60 p-2 sm:p-2.5 rounded-xl border border-white/[0.06] gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <Cpu className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-cyan-400 shrink-0" />
+            <span className="text-[11px] sm:text-xs font-mono font-bold text-white truncate">SP2L-LSM</span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             {(['P1', 'P2', 'P3'] as const).map((mode) => (
               <button
                 key={mode}
                 onClick={() => setActiveMode(mode)}
-                className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-all ${
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-mono font-bold transition-all ${
                   activeMode === mode
                     ? 'bg-cyan-500 text-slate-950 shadow-[0_0_10px_#06b6d4]'
                     : 'bg-slate-800/80 text-slate-400 hover:text-white'
@@ -77,14 +77,14 @@ export const IndustrialTelemetryVisual: React.FC = () => {
         </div>
 
         {/* Real-time Multi-Axis Coordinates Display */}
-        <div className="mt-4 grid grid-cols-3 gap-2.5">
-          <div className="p-3 rounded-xl bg-slate-900/80 border border-cyan-500/20">
-            <div className="text-[10px] font-mono uppercase text-slate-400">X-Axis (Linear)</div>
-            <div className="text-base sm:text-lg font-mono font-black text-cyan-300 mt-0.5">
-              {coords.x.toFixed(3)}
-              <span className="text-[10px] font-normal text-slate-500 ml-1">mm</span>
+        <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1.5 sm:gap-2.5">
+          <div className="p-2 sm:p-3 rounded-xl bg-slate-900/80 border border-cyan-500/20">
+            <div className="text-[9px] sm:text-[10px] font-mono uppercase text-slate-400 truncate">X (Linear)</div>
+            <div className="text-sm sm:text-lg font-mono font-black text-cyan-300 mt-0.5">
+              {coords.x.toFixed(2)}
+              <span className="text-[9px] sm:text-[10px] font-normal text-slate-500 ml-0.5">mm</span>
             </div>
-            <div className="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+            <div className="w-full bg-slate-800 h-1 rounded-full mt-1.5 sm:mt-2 overflow-hidden">
               <div
                 className="bg-cyan-400 h-full rounded-full transition-all duration-300"
                 style={{ width: `${(coords.x % 100)}%` }}
@@ -92,13 +92,13 @@ export const IndustrialTelemetryVisual: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/20">
-            <div className="text-[10px] font-mono uppercase text-slate-400">Y-Axis (Galvo)</div>
-            <div className="text-base sm:text-lg font-mono font-black text-emerald-300 mt-0.5">
-              {coords.y.toFixed(3)}
-              <span className="text-[10px] font-normal text-slate-500 ml-1">mm</span>
+          <div className="p-2 sm:p-3 rounded-xl bg-slate-900/80 border border-emerald-500/20">
+            <div className="text-[9px] sm:text-[10px] font-mono uppercase text-slate-400 truncate">Y (Galvo)</div>
+            <div className="text-sm sm:text-lg font-mono font-black text-emerald-300 mt-0.5">
+              {coords.y.toFixed(2)}
+              <span className="text-[9px] sm:text-[10px] font-normal text-slate-500 ml-0.5">mm</span>
             </div>
-            <div className="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+            <div className="w-full bg-slate-800 h-1 rounded-full mt-1.5 sm:mt-2 overflow-hidden">
               <div
                 className="bg-emerald-400 h-full rounded-full transition-all duration-300"
                 style={{ width: `${(coords.y % 100)}%` }}
@@ -106,13 +106,13 @@ export const IndustrialTelemetryVisual: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-900/80 border border-indigo-500/20">
-            <div className="text-[10px] font-mono uppercase text-slate-400">Z-Focus Offset</div>
-            <div className="text-base sm:text-lg font-mono font-black text-indigo-300 mt-0.5">
-              {coords.z.toFixed(3)}
-              <span className="text-[10px] font-normal text-slate-500 ml-1">mm</span>
+          <div className="p-2 sm:p-3 rounded-xl bg-slate-900/80 border border-indigo-500/20">
+            <div className="text-[9px] sm:text-[10px] font-mono uppercase text-slate-400 truncate">Z (Focus)</div>
+            <div className="text-sm sm:text-lg font-mono font-black text-indigo-300 mt-0.5">
+              {coords.z.toFixed(2)}
+              <span className="text-[9px] sm:text-[10px] font-normal text-slate-500 ml-0.5">mm</span>
             </div>
-            <div className="w-full bg-slate-800 h-1 rounded-full mt-2 overflow-hidden">
+            <div className="w-full bg-slate-800 h-1 rounded-full mt-1.5 sm:mt-2 overflow-hidden">
               <div
                 className="bg-indigo-400 h-full rounded-full transition-all duration-300"
                 style={{ width: `${(coords.z * 50)}%` }}

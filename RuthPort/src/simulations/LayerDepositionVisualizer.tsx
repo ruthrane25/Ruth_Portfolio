@@ -201,21 +201,21 @@ export const LayerDepositionVisualizer: React.FC = () => {
   return (
     <div className="relative w-full rounded-2xl bg-[#030712]/90 border border-emerald-500/30 overflow-hidden shadow-2xl backdrop-blur-xl">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 border-b border-white/[0.08] bg-slate-900/60">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-xs font-mono font-bold text-white tracking-wide">
-            SP2L-4D-BIO // LAYER DEPOSITION & UV ENGINE
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3.5 border-b border-white/[0.08] bg-slate-900/60">
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
+          <span className="text-[11px] sm:text-xs font-mono font-bold text-white tracking-wide truncate">
+            SP2L-4D-BIO // LAYER DEPOSITION & UV
           </span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono">
-          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-mono">
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center gap-1 sm:gap-1.5">
+            <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
             HEPA Class 100
           </span>
-          <span className="px-2.5 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-300 flex items-center gap-1.5">
-            <Sun className="w-3.5 h-3.5 text-violet-400" />
+          <span className="px-2 sm:px-2.5 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-300 flex items-center gap-1 sm:gap-1.5">
+            <Sun className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-violet-400 shrink-0" />
             UV 395nm
           </span>
         </div>
@@ -223,40 +223,40 @@ export const LayerDepositionVisualizer: React.FC = () => {
 
       {/* Canvas */}
       <div className="relative">
-        <canvas ref={canvasRef} className="w-full h-[220px] block" />
-        <div className="absolute top-2 right-3 text-[10px] font-mono text-emerald-300 bg-black/60 px-2 py-0.5 rounded border border-emerald-500/20">
-          Layer {currentLayer} of 8 • Syringe Z-Offset: +{(currentLayer * 0.15).toFixed(2)} mm
+        <canvas ref={canvasRef} className="w-full h-[200px] sm:h-[220px] block" />
+        <div className="absolute top-2 right-2 sm:right-3 text-[9px] sm:text-[10px] font-mono text-emerald-300 bg-black/60 px-2 py-0.5 rounded border border-emerald-500/20 max-w-[90%] truncate">
+          Layer {currentLayer} of 8 • Z: +{(currentLayer * 0.15).toFixed(2)} mm
         </div>
       </div>
 
       {/* Diagnostics */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 bg-slate-950/80 border-t border-white/[0.08] text-xs font-mono">
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-emerald-500/20">
-          <span className="text-[10px] text-slate-400 block">Extrusion Pressure</span>
-          <span className="font-bold text-emerald-300 text-sm">{pressure.toFixed(1)} Bar</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 p-2.5 sm:p-3 bg-slate-950/80 border-t border-white/[0.08] text-xs font-mono">
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-emerald-500/20">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Extrusion Pressure</span>
+          <span className="font-bold text-emerald-300 text-xs sm:text-sm">{pressure.toFixed(1)} Bar</span>
         </div>
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-violet-500/20">
-          <span className="text-[10px] text-slate-400 block">UV Photocuring</span>
-          <span className={`font-bold text-sm ${uvCuring ? 'text-violet-300 animate-pulse' : 'text-slate-400'}`}>
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-violet-500/20">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">UV Photocuring</span>
+          <span className={`font-bold text-xs sm:text-sm ${uvCuring ? 'text-violet-300 animate-pulse' : 'text-slate-400'}`}>
             {uvCuring ? 'ACTIVE 395nm' : 'STANDBY'}
           </span>
         </div>
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-cyan-500/20">
-          <span className="text-[10px] text-slate-400 block">Cell Scaffold Temp</span>
-          <span className="font-bold text-cyan-300 text-sm">37.0 °C (PID)</span>
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-cyan-500/20">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Scaffold Temp</span>
+          <span className="font-bold text-cyan-300 text-xs sm:text-sm">37.0 °C</span>
         </div>
-        <div className="p-2 rounded-lg bg-slate-900/80 border border-white/10">
-          <span className="text-[10px] text-slate-400 block">Laminar Airflow</span>
-          <span className="font-bold text-slate-100 text-sm">0.45 m/s ISO 5</span>
+        <div className="p-1.5 sm:p-2 rounded-lg bg-slate-900/80 border border-white/10">
+          <span className="text-[9px] sm:text-[10px] text-slate-400 block truncate">Airflow</span>
+          <span className="font-bold text-slate-100 text-xs sm:text-sm truncate">0.45 m/s ISO 5</span>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-between p-3 border-t border-white/[0.08] bg-slate-900/50">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 sm:p-3 border-t border-white/[0.08] bg-slate-900/50">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           <button
             onClick={() => setIsPrinting(!isPrinting)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all active:scale-95"
           >
             <Play className={`w-3.5 h-3.5 ${isPrinting ? 'text-emerald-400' : 'text-slate-400'}`} />
             {isPrinting ? 'Pause Motion' : 'Start Motion'}
@@ -264,7 +264,7 @@ export const LayerDepositionVisualizer: React.FC = () => {
 
           <button
             onClick={handleNextLayer}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/40 hover:bg-violet-500/30 transition-all"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/40 hover:bg-violet-500/30 transition-all active:scale-95"
           >
             <Layers className="w-3.5 h-3.5" />
             + Extrude Layer
@@ -272,7 +272,7 @@ export const LayerDepositionVisualizer: React.FC = () => {
 
           <button
             onClick={handleReset}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 bg-slate-800 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-mono text-slate-400 bg-slate-800 hover:text-white transition-colors active:scale-95"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             Reset

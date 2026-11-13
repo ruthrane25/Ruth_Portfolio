@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </nav>
 
             {/* Action Buttons */}
-            <div className="hidden sm:flex items-center gap-2.5">
+            <div className="hidden lg:flex items-center gap-2.5">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
@@ -137,17 +137,18 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
 
-            {/* Mobile Hamburger */}
-            <div className="flex sm:hidden items-center gap-2">
+            {/* Mobile / Tablet Hamburger & CV Quick Button */}
+            <div className="flex lg:hidden items-center gap-2">
               <button
                 onClick={() => setResumeOpen(true)}
-                className="p-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-medium"
+                className="px-2.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-medium flex items-center gap-1 active:scale-95"
               >
-                CV
+                <FileText className="w-3 h-3" />
+                <span>Resume</span>
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-xl bg-slate-900 border border-white/[0.08] text-slate-300 hover:text-white focus:outline-none"
+                className="p-2 rounded-xl bg-slate-900 border border-white/[0.08] text-slate-300 hover:text-white focus:outline-none active:scale-95"
                 aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -156,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile / Tablet Dropdown Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -164,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="sm:hidden border-b border-white/[0.08] bg-[#070c18]/95 backdrop-blur-2xl px-4 py-5 overflow-hidden"
+              className="lg:hidden border-b border-white/[0.08] bg-[#070c18]/95 backdrop-blur-2xl px-4 py-5 overflow-hidden"
             >
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
